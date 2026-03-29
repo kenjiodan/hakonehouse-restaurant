@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jacques+Francois&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Starts slightly below its final position */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Ends in its original position */
+    }
+}
+
+.animated-element {
+    /* Apply the animation to the element */
+    animation-name: fadeInUp;
+    animation-duration: 1.5s; /* The animation lasts for 1.5 seconds */
+    animation-fill-mode: forwards; /* Ensures it stays in its final state */
+    /* Add other styles like font, color, etc. */
+}
