@@ -10,36 +10,172 @@
     <title>Hakone House</title> 
 </head>
 <body class="bg-[#271F1F]">
-    <header class="flex justify-between items-center flex-wrap p-12 gap-x-18 px-38 bg-[#271F1F] h-32 border-2 border-transparent border-b-[#2e2525] rounded-br-xl rounded-bl-xl"> <!--sticky top-0-->
+    <header class="flex justify-between items-center flex-wrap p-12 gap-x-18 px-38 bg-[#271F1F] h-32 border-2 border-transparent border-b-[#2e2525] rounded-br-xl rounded-bl-xl">
         <div class="animated-element ml-14">
             <a href="index.html">
                 <h1 class="text-white text-3xl font-serif tracking-[.25em]">HAKONE HOUSE</h1>
             </a>
         </div>
-        <nav class="flex justify-between items-center gap-x-6 text-lg text-white font-[Rubik]">
-            <a href="#" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100"> <i class="mr-3 fa-solid fa-utensils"></i> Cardápio</a>
-            <a href="#" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100"> <i class="mr-3 fa-solid fa-tags"></i> Promoções</a>
-            <a href="#" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100"> <i class="mr-3 fa-solid fa-map-location"></i> Endereço</a>
-            <a href="#" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100"> <i class="mr-3 fa-solid fa-at"></i></i>Sobre</a>
+
+        <!-- Botão hambúrguer (mobile) -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <nav id="mainNav" class="flex justify-between items-center gap-x-6 text-lg text-white font-[Rubik]">
+            <a href="#cardapio" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100">
+                <i class="mr-3 fa-solid fa-utensils"></i><span class="nav-label">Cardápio</span>
+            </a>
+            <a href="#avaliacoes" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100">
+                <i class="mr-3 fa-solid fa-tags"></i><span class="nav-label">Avaliações</span>
+            </a>
+            <a href="#endereco" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100">
+                <i class="mr-3 fa-solid fa-map-location"></i><span class="nav-label">Endereço</span>
+            </a>
+            <a href="#" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100">
+                <i class="mr-3 fa-solid fa-at"></i><span class="nav-label">Sobre</span>
+            </a>
         </nav>
     </header>
     <section class="flex justify-end items-center bg-[url(assets/hero-20.png)] bg-center bg-no-repeat bg-cover min-h-200">
         <div class="flex justify-center items-center flex-col text-white mr-40 max-w-120 min-h-200 animated-element">
-            <h1 style="font-family: 'Righteous', sans-serif;" class="font-serif text-5xl/20 text-right font-[Righteous] ">Levando a culinária japonesa para a região norte</h1>
+            <h1 style="font-family: 'Righteous', sans-serif;" class="font-serif text-5xl/20 text-right font-[Righteous]">Levando a culinária japonesa para a região norte</h1>
             <a href="#" class="self-end bg-red-700 rounded-sm py-4 px-12 font-bold text-3xl hover:bg-[#570000] font-[Rubik] hover:px-11 mt-8 duration-100">Faça seu Pedido</a>
         </div> 
     </section>
-    <section class="flex justify-center items-center bg-white min-h-200">
-
+    <section id="cardapio" class="bg-white min-h-220 p-10 gap-5 flex justify-center items-center text-center flex-col">
+        <p class="reviews-eyebrow">Cardápio</p>
+        <h1 style="font-family: 'Righteous', sans-serif;" class="font-serif text-5xl/20 font-[Righteous] ">Os melhores pratos estão aqui</h1>
+        <div class="carrossel-container">
+            <div class="carrossel-slides">
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/ramen.png" class="mb-2" >
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Normal Ramen</h2>
+                    <p class="text-sm px-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia optio corrupti impedit.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 25,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/ramen-tonkatsu.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Ramen Tonkatsu</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia optio corrupti impedit.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 25,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/udon.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Udon</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia optio corrupti impedit.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 25,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/sushi.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Sashimi</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia optio corrupti impedit.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 25,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/miso.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Miso Soup</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia optio corrupti impedit.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 25,99</a>
+                </div>
+            </div>
+        </div>
     </section>
-    <section class="flex justify-center items-center bg-[#271F1F] min-h-200">
+    <section id="avaliacoes" class="reviews-section">
+        <div class="reviews-header">
+            <p class="reviews-eyebrow">Avaliações</p>
+            <h2 class="reviews-title">O que dizem nossos clientes</h2>
+            <p class="reviews-subtitle">Experiências reais de quem já visitou o Hakone House em Manaus.</p>
+        </div>
+        <!-- Score geral -->
+        <div class="overall-score">
+            <div class="score-number">4,8</div>
+            <div class="score-stars">★★★★★</div>
+            <div class="score-count">Baseado em 247 avaliações verificadas</div>
+        </div>
 
+        <!-- Cards de avaliações -->
+        <div class="reviews-grid">
+
+            <!-- Card 1 — Destaque -->
+            <div class="review-card featured">
+                <span class="featured-badge">Destaque</span>
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    O melhor ramen que já comi fora do Japão. O caldo tonkatsu é denso, rico e cheio de sabor — dá para sentir que foi feito com muito cuidado. Uma experiência gastronômica que vale cada centavo aqui em Manaus.
+                </p>
+                <div class="review-stars">★★★★★</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #7a1a1a;">AM</div>
+                    <div>
+                        <div class="reviewer-name">Ana Mello</div>
+                        <div class="reviewer-meta">Google Maps · há 2 dias</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="review-card">
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    Ambiente aconchegante, atendimento impecável e o sukiyaki é simplesmente espetacular. A carne estava tão macia que derretia na boca. Voltarei com certeza e já recomendei para toda a família!
+                </p>
+                <div class="review-stars">★★★★★</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #3b2020;">RC</div>
+                    <div>
+                        <div class="reviewer-name">Rafael Castro</div>
+                        <div class="reviewer-meta">iFood · há 1 semana</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="review-card">
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    Finalmente uma culinária japonesa autêntica no norte do Brasil. O sashimi estava fresquíssimo e o miso estava perfeito. O lugar tem uma atenção especial aos detalhes que você raramente encontra por aqui.
+                </p>
+                <div class="review-stars">★★★★☆</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #1e2e3b;">JP</div>
+                    <div>
+                        <div class="reviewer-name">Julia Paiva</div>
+                        <div class="reviewer-meta">TripAdvisor · há 2 semanas</div>
+                    </div>
+                </div>
+            </div>
+
+    </section><!-- /avaliacoes -->
+    <section id="endereco" class="flex justify-between items-center bg-white min-h-200 p-5 flex-row-reverse">
+        <div class="flex justify-center items-center flex-col gap-5">
+            <p class="reviews-eyebrow">Endereço</p>
+            <span class="text-black mb-15 text-3xl font-serif tracking-[.25em]">HAKONE HOUSE</span>
+            <h1 style="font-family: 'Righteous', sans-serif;" class="font-serif text-5xl/20 text-center font-[Righteous]">Siga o nosso endereço</h1>
+            <p class="text-2xl font-[Rubik] text-center w-[85%]">Estamos localizados no coração de Manaus. Clique no botão abaixo para abrir o mapa completo com rotas, horários e mais detalhes sobre como chegar até nós.</p>
+            <a href="https://maps.google.com" target="_blank" class="mt-4 bg-red-700 hover:bg-[#570000] text-white font-bold font-[Rubik] text-xl py-4 px-10 rounded-sm duration-100">
+                <i class="fa-solid fa-map-location-dot mr-3"></i>Ver no Google Maps
+            </a>
+        </div>
+        <div class="bg-[#271F1F] min-w-[1100px] min-h-[600px] p-3 rounded-sm">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d467692.40053583815!2d-46.92562547359783!3d-23.681433219738427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce448183a461d1%3A0x9ba94b08ff335bae!2sS%C3%A3o%20Paulo%2C%20State%20of%20S%C3%A3o%20Paulo!5e0!3m2!1sen!2sbr!4v1775927260949!5m2!1sen!2sbr" width="100%" height="650px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
     </section>
-    <section class="flex justify-center items-center bg-white min-h-200">
 
-    </section>
-    <footer class="flex justify-between items-center min-h-80 bg-[#271F1F] ">
 
+    <footer class="flex justify-between items-center min-h-80 bg-[#271F1F] px-35 py-8">
+        <a href="index.html">
+            <h1 class="text-white text-3xl font-serif tracking-[.25em]">HAKONE HOUSE</h1>
+        </a>
+        <div class="flex flex-col text-white w-70 gap-5">
+            <h2 class="font-bold text-2xl">Unidade Parque 10</h2>
+            <p>Av. Tancredo Neves, 282 - Parque 10 de Novembro, Manaus - AM, 69054-700</p>
+        </div>
+        <div class="flex flex-col text-white w-70 gap-5">
+            <a href="#" class="text-white text-xl underline hover:text-[#2e2525]"><i class="fa-brands fa-whatsapp text-white text-3xl mr-4"></i><br>(92) 12345-6789</a>
+            <a href="#" class="text-white text-xl underline hover:text-[#2e2525]"><i class="fa-solid fa-envelope text-white text-2xl mr-4"></i>contatohakonehouse@gmail.com</a>
+        </div>
     </footer>
+    <script src="script.js"></script>
 </body>
 </html>

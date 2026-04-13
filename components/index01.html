@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="../favicon/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Rubik:wght@400;700&display=swap" rel="stylesheet">
+    <title>Hakone House</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; }
+
+        /* ===== CARROSSEL ===== */
+        .carrossel-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+        }
+        .carrossel-container {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+        .carrossel-slides {
+            display: flex;
+            gap: 20px;
+            transition: transform 0.4s ease;
+            width: max-content;
+        }
+        .slides {
+            width: 240px;
+            flex-shrink: 0;
+        }
+        .slides img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+        }
+        .carrossel-arrow {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #271F1F;
+            color: #fff;
+            border: 2px solid #271F1F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+            z-index: 2;
+        }
+        .carrossel-arrow:hover {
+            background: #fff;
+            color: #271F1F;
+            transform: scale(1.08);
+        }
+        .carrossel-arrow:active { transform: scale(0.96); }
+        .carrossel-arrow#prev { margin-right: 16px; }
+        .carrossel-arrow#next { margin-left: 16px; }
+
+        /* ===== ANIMAÇÕES ===== */
+        .animated-element {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.7s ease forwards;
+        }
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== SEÇÃO DE AVALIAÇÕES ===== */
+        .reviews-section {
+            background: #271F1F;
+            padding: 80px 40px;
+        }
+        .reviews-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .reviews-eyebrow {
+            font-family: 'Rubik', sans-serif;
+            font-size: 12px;
+            letter-spacing: 0.25em;
+            color: #c0392b;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .reviews-title {
+            font-family: 'Righteous', sans-serif;
+            font-size: clamp(28px, 5vw, 48px);
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .reviews-subtitle {
+            font-family: 'Rubik', sans-serif;
+            color: #a09090;
+            font-size: 16px;
+            max-width: 480px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        /* Score geral */
+        .overall-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+        .score-number {
+            font-family: 'Righteous', sans-serif;
+            font-size: clamp(56px, 10vw, 88px);
+            color: #fff;
+            line-height: 1;
+        }
+        .score-stars {
+            color: #c0392b;
+            font-size: 22px;
+            letter-spacing: 4px;
+            margin: 6px 0;
+        }
+        .score-count {
+            font-family: 'Rubik', sans-serif;
+            font-size: 13px;
+            color: #7a6a68;
+        }
+
+        /* Grid de cards */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto 40px;
+        }
+        .review-card {
+            background: #1e1717;
+            border: 1px solid #3a2e2e;
+            border-radius: 24px;
+            padding: 28px 24px 20px;
+            position: relative;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .review-card:hover {
+            transform: translateY(-4px);
+            border-color: #7a2020;
+        }
+        .review-card.featured {
+            border-color: #c0392b;
+            background: #231a1a;
+        }
+        .featured-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            background: #c0392b;
+            color: #fff;
+            font-family: 'Rubik', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.05em;
+        }
+        .quote-mark {
+            font-family: Georgia, serif;
+            font-size: 52px;
+            color: #c0392b;
+            line-height: 0.8;
+            margin-bottom: 8px;
+            opacity: 0.7;
+        }
+        .review-text {
+            font-family: 'Rubik', sans-serif;
+            color: #c8b8b5;
+            font-size: 14px;
+            line-height: 1.65;
+            margin-bottom: 16px;
+            flex: 1;
+        }
+        .review-stars {
+            color: #c0392b;
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .reviewer-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-top: 1px solid #3a2e2e;
+            padding-top: 16px;
+        }
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Rubik', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            flex-shrink: 0;
+        }
+        .reviewer-name {
+            font-family: 'Rubik', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #e8d8d5;
+        }
+        .reviewer-meta {
+            font-family: 'Rubik', sans-serif;
+            font-size: 11px;
+            color: #7a6a68;
+            margin-top: 2px;
+        }
+
+        /* Barra de satisfação */
+        .satisfaction-bar-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            gap: 32px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .satisfaction-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .satisfaction-label {
+            font-family: 'Rubik', sans-serif;
+            font-size: 12px;
+            color: #7a6a68;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .satisfaction-track {
+            width: 160px;
+            height: 4px;
+            background: #3a2e2e;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .satisfaction-fill {
+            height: 100%;
+            background: #c0392b;
+            border-radius: 2px;
+            transition: width 1.2s ease;
+        }
+        .satisfaction-pct {
+            font-family: 'Righteous', sans-serif;
+            font-size: 14px;
+            color: #e8d8d5;
+        }
+
+        /* ===== MOBILE MENU BUTTON ===== */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: 2px solid #fff;
+            color: #fff;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* ===== SEÇÃO ENDEREÇO — base flexível ===== */
+        /* Remove min-width fixo do Tailwind e torna o layout fluido */
+        .endereco-map-wrapper {
+            flex: 1 1 500px;
+            min-width: 0;          /* anula min-width intrínseco */
+            background: #271F1F;
+            padding: 12px;
+            border-radius: 4px;
+        }
+        .endereco-map-wrapper iframe {
+            display: block;
+            width: 100%;
+            height: 500px;
+            border: 0;
+        }
+        .endereco-text-wrapper {
+            flex: 1 1 320px;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 32px;
+            text-align: center;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+
+        /* ── 1400px: nav começa a apertar, reduz padding e fonte ── */
+        @media (max-width: 1400px) {
+            header { padding: 20px 32px !important; }
+            header > div:first-child { margin-left: 0 !important; }
+            #mainNav { gap: 4px !important; font-size: 15px !important; }
+            #mainNav a { padding: 6px 10px !important; }
+        }
+
+        /* ── 1100px: nav mais compacto, ícones visíveis sem texto ── */
+        @media (max-width: 1100px) {
+            #mainNav { font-size: 14px !important; gap: 2px !important; }
+            #mainNav a { padding: 6px 8px !important; }
+            #mainNav a .nav-label { display: none; }   /* oculta só o texto */
+            #mainNav a i { margin-right: 0 !important; font-size: 18px; }
+            .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+            /* Endereço começa a empilhar */
+            section[id="endereco"] {
+                flex-wrap: wrap !important;
+                flex-direction: row !important;
+            }
+        }
+
+        /* ── 860px: hambúrguer aparece, nav se recolhe ── */
+        @media (max-width: 860px) {
+            header {
+                flex-wrap: wrap;
+                height: auto !important;
+                padding: 16px 20px !important;
+                gap: 0 !important;
+            }
+            .menu-toggle { display: block; }
+            #mainNav {
+                display: none;
+                width: 100%;
+                flex-direction: column !important;
+                gap: 4px !important;
+                padding-top: 16px;
+                border-top: 1px solid #3a2e2e;
+                margin-top: 12px;
+                font-size: 16px !important;
+            }
+            #mainNav a { padding: 10px 16px !important; }
+            /* Mostrar textos novamente no menu expandido */
+            #mainNav a .nav-label { display: inline !important; }
+            #mainNav a i { margin-right: 12px !important; font-size: 16px !important; }
+            #mainNav.open { display: flex !important; }
+
+            /* Hero */
+            section.flex.justify-end {
+                justify-content: center !important;
+                align-items: flex-end !important;
+                min-height: 520px !important;
+                background-position: center top !important;
+            }
+            section.flex.justify-end > div {
+                margin-right: 0 !important;
+                align-items: center !important;
+                text-align: center !important;
+                padding: 0 20px 40px;
+                max-width: 90% !important;
+            }
+            section.flex.justify-end h1 { text-align: center !important; font-size: 32px !important; }
+            section.flex.justify-end a { align-self: center !important; font-size: 22px !important; padding: 14px 32px !important; }
+
+            /* Cardápio */
+            .slides { width: 200px; }
+            .slides img { height: 140px; }
+
+            /* Endereço — empilha verticalmente */
+            section[id="endereco"] {
+                flex-direction: column !important;
+                padding: 40px 20px !important;
+            }
+            .endereco-text-wrapper { padding: 32px 16px 20px; }
+            .endereco-map-wrapper { width: 100%; flex-basis: auto; }
+            .endereco-map-wrapper iframe { height: 380px; }
+
+            /* Avaliações */
+            .reviews-grid { grid-template-columns: 1fr; max-width: 480px; }
+            .satisfaction-track { width: 120px; }
+
+            /* Footer */
+            footer {
+                flex-direction: column !important;
+                gap: 32px !important;
+                padding: 40px 24px !important;
+                text-align: center;
+            }
+            footer > div { width: auto !important; }
+        }
+
+        /* ── 600px: mobile pequeno ── */
+        @media (max-width: 600px) {
+            section.flex.justify-end { min-height: 420px !important; }
+            section.flex.justify-end h1 { font-size: 26px !important; line-height: 1.3 !important; }
+            .reviews-section { padding: 48px 16px; }
+            .review-card { padding: 20px 16px 16px; }
+            .slides { width: 160px; }
+            .slides img { height: 110px; }
+            .slides h2 { font-size: 16px !important; }
+            section[id="cardapio"] > h1 { font-size: 28px !important; }
+            section[id="cardapio"] { padding: 32px 12px !important; }
+            .satisfaction-bar-container { gap: 20px; }
+            .satisfaction-track { width: 100px; }
+            .endereco-text-wrapper h1 { font-size: 28px !important; }
+            .endereco-text-wrapper p  { font-size: 16px !important; }
+            .endereco-map-wrapper iframe { height: 300px; }
+        }
+    </style>
+</head>
+<body class="bg-[#271F1F]">
+
+    <!-- HEADER -->
+    <header class="flex justify-between items-center flex-wrap p-12 gap-x-18 px-38 bg-[#271F1F] h-32 border-2 border-transparent border-b-[#2e2525] rounded-br-xl rounded-bl-xl">
+        <div class="animated-element ml-14">
+            <a href="index.html">
+                <h1 class="text-white text-3xl font-serif tracking-[.25em]">HAKONE HOUSE</h1>
+            </a>
+        </div>
+
+        <!-- Botão hambúrguer (mobile) -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <nav id="mainNav" class="flex justify-between items-center gap-x-6 text-lg text-white font-[Rubik]">
+            <a href="#cardapio" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100">
+                <i class="mr-3 fa-solid fa-utensils"></i><span class="nav-label">Cardápio</span>
+            </a>
+            <a href="#avaliacoes" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100">
+                <i class="mr-3 fa-solid fa-tags"></i><span class="nav-label">Avaliações</span>
+            </a>
+            <a href="#endereco" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100">
+                <i class="mr-3 fa-solid fa-map-location"></i><span class="nav-label">Endereço</span>
+            </a>
+            <a href="#" class="py-2 px-5 rounded-3xl font-bold border-2 border-transparent hover:border-white duration-100">
+                <i class="mr-3 fa-solid fa-at"></i><span class="nav-label">Sobre</span>
+            </a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="flex justify-end items-center bg-[url(assets/hero-20.png)] bg-center bg-no-repeat bg-cover min-h-200">
+        <div class="flex justify-center items-center flex-col text-white mr-40 max-w-120 min-h-200 animated-element">
+            <h1 style="font-family: 'Righteous', sans-serif;" class="font-serif text-5xl/20 text-right font-[Righteous]">
+                Levando a culinária japonesa para a região norte
+            </h1>
+            <a href="#" class="self-end bg-red-700 rounded-sm py-4 px-12 font-bold text-3xl hover:bg-[#570000] font-[Rubik] hover:px-11 mt-8 duration-100">
+                Faça seu Pedido
+            </a>
+        </div>
+    </section>
+
+    <!-- CARDÁPIO -->
+    <section id="cardapio" class="bg-white min-h-220 p-10 gap-5 flex justify-center items-center text-center flex-col">
+        <h1 style="font-family: 'Righteous', sans-serif;" class="font-serif text-5xl/20 font-[Righteous]">Os melhores pratos estão aqui</h1>
+        <div class="carrossel-wrapper">
+            <button id="prev" class="carrossel-arrow" aria-label="Anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="carrossel-container">
+            <div class="carrossel-slides" id="carrosselSlides">
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/ramen.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Normal Ramen</h2>
+                    <p class="text-sm px-2">Caldo suave com macarrão artesanal, ovo marinado e cebolinha fresca.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 25,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/ramen-tonkatsu.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Ramen Tonkatsu</h2>
+                    <p>Caldo rico de ossos de porco, macarrão espesso e chashu macio.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 32,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/udon.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Udon</h2>
+                    <p>Macarrão grosso em caldo dashi com tempurá crocante.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 28,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/sushi.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Sashimi</h2>
+                    <p>Fatias de peixe fresco com molho shoyu especial e wasabi.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 38,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/miso.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Miso Soup</h2>
+                    <p>Sopa tradicional com pasta de missô, tofu e cebolinha.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 15,99</a>
+                </div>
+                <div class="border-3 border-black rounded-[60px] p-6 min-h-[400px] slides text-center">
+                    <img src="assets/sukiyaki.png" class="mb-2">
+                    <h2 class="text-3xl mb-2 font-[Righteous]">Sukiyaki</h2>
+                    <p>Carne fatiada com vegetais e tofu cozidos em molho agridoce.</p>
+                    <a href="#" class="block mt-4 bg-[#604d4d] hover:bg-[#271F1F] text-white py-4 px-2 rounded-full font-bold text-xl font-[Rubik]">R$ 44,99</a>
+                </div>
+            </div>
+        </div><!-- /carrossel-container -->
+        <button id="next" class="carrossel-arrow" aria-label="Próximo">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+    </div><!-- /carrossel-wrapper -->
+    </section>
+
+    <!-- ===== SEÇÃO DE AVALIAÇÕES ===== -->
+    <section id="avaliacoes" class="reviews-section">
+        <div class="reviews-header">
+            <p class="reviews-eyebrow">Avaliações</p>
+            <h2 class="reviews-title">O que dizem nossos clientes</h2>
+            <p class="reviews-subtitle">Experiências reais de quem já visitou o Hakone House em Manaus.</p>
+        </div>
+
+        <!-- Score geral -->
+        <div class="overall-score">
+            <div class="score-number">4,8</div>
+            <div class="score-stars">★★★★★</div>
+            <div class="score-count">Baseado em 247 avaliações verificadas</div>
+        </div>
+
+        <!-- Cards de avaliações -->
+        <div class="reviews-grid">
+
+            <!-- Card 1 — Destaque -->
+            <div class="review-card featured">
+                <span class="featured-badge">Destaque</span>
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    O melhor ramen que já comi fora do Japão. O caldo tonkatsu é denso, rico e cheio de sabor — dá para sentir que foi feito com muito cuidado. Uma experiência gastronômica que vale cada centavo aqui em Manaus.
+                </p>
+                <div class="review-stars">★★★★★</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #7a1a1a;">AM</div>
+                    <div>
+                        <div class="reviewer-name">Ana Mello</div>
+                        <div class="reviewer-meta">Google Maps · há 2 dias</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="review-card">
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    Ambiente aconchegante, atendimento impecável e o sukiyaki é simplesmente espetacular. A carne estava tão macia que derretia na boca. Voltarei com certeza e já recomendei para toda a família!
+                </p>
+                <div class="review-stars">★★★★★</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #3b2020;">RC</div>
+                    <div>
+                        <div class="reviewer-name">Rafael Castro</div>
+                        <div class="reviewer-meta">iFood · há 1 semana</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="review-card">
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    Finalmente uma culinária japonesa autêntica no norte do Brasil. O sashimi estava fresquíssimo e o miso estava perfeito. O lugar tem uma atenção especial aos detalhes que você raramente encontra por aqui.
+                </p>
+                <div class="review-stars">★★★★☆</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #1e2e3b;">JP</div>
+                    <div>
+                        <div class="reviewer-name">Julia Paiva</div>
+                        <div class="reviewer-meta">TripAdvisor · há 2 semanas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="review-card">
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    Pedi o Udon e o Miso e os dois eram excepcionais. O caldo dashi tem aquele sabor umami profundo que só aparece quando usado ingredientes de qualidade. Ótimo custo-benefício para o nível do prato.
+                </p>
+                <div class="review-stars">★★★★★</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #1e3b1e;">LF</div>
+                    <div>
+                        <div class="reviewer-name">Lucas Ferreira</div>
+                        <div class="reviewer-meta">Google Maps · há 3 semanas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="review-card">
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    Minha primeira vez no Hakone House e não será a última. Pedi o ramen normal e fiquei surpreso com a complexidade do sabor. O ambiente é lindo, muito bem decorado com referências japonesas sutis.
+                </p>
+                <div class="review-stars">★★★★★</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #3b2e1e;">MO</div>
+                    <div>
+                        <div class="reviewer-name">Mariana Oliveira</div>
+                        <div class="reviewer-meta">iFood · há 1 mês</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="review-card">
+                <div class="quote-mark">"</div>
+                <p class="review-text">
+                    Como fã de culinária japonesa, estava cético se encontraria algo autêntico em Manaus. O Hakone House surpreendeu — o sashimi fresco e os temperos importados mostram um compromisso real com a qualidade.
+                </p>
+                <div class="review-stars">★★★★★</div>
+                <div class="reviewer-row">
+                    <div class="avatar" style="background: #2e1e3b;">GS</div>
+                    <div>
+                        <div class="reviewer-name">Gabriel Santos</div>
+                        <div class="reviewer-meta">TripAdvisor · há 1 mês</div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /reviews-grid -->
+
+        <!-- Barras de satisfação -->
+        <div class="satisfaction-bar-container" id="satisfactionBars">
+            <div class="satisfaction-item">
+                <span class="satisfaction-label">Sabor</span>
+                <div class="satisfaction-track">
+                    <div class="satisfaction-fill" data-pct="98" style="width:0%"></div>
+                </div>
+                <span class="satisfaction-pct">98%</span>
+            </div>
+            <div class="satisfaction-item">
+                <span class="satisfaction-label">Atendimento</span>
+                <div class="satisfaction-track">
+                    <div class="satisfaction-fill" data-pct="95" style="width:0%"></div>
+                </div>
+                <span class="satisfaction-pct">95%</span>
+            </div>
+            <div class="satisfaction-item">
+                <span class="satisfaction-label">Ambiente</span>
+                <div class="satisfaction-track">
+                    <div class="satisfaction-fill" data-pct="92" style="width:0%"></div>
+                </div>
+                <span class="satisfaction-pct">92%</span>
+            </div>
+            <div class="satisfaction-item">
+                <span class="satisfaction-label">Custo-benefício</span>
+                <div class="satisfaction-track">
+                    <div class="satisfaction-fill" data-pct="89" style="width:0%"></div>
+                </div>
+                <span class="satisfaction-pct">89%</span>
+            </div>
+        </div>
+
+    </section><!-- /avaliacoes -->
+
+    <!-- ENDEREÇO -->
+    <section id="endereco" class="flex items-stretch bg-white" style="flex-direction: row-reverse; flex-wrap: wrap; min-height: auto;">
+        <div class="endereco-text-wrapper">
+            <span class="text-black text-3xl font-serif tracking-[.25em]">HAKONE HOUSE</span>
+            <h1 style="font-family: 'Righteous', sans-serif;" class="font-serif text-5xl/20 text-center font-[Righteous]">Siga o nosso endereço</h1>
+            <p class="text-2xl font-[Rubik] text-center" style="max-width: 480px;">Estamos localizados no coração de Manaus. Clique no botão abaixo para abrir o mapa completo com rotas, horários e mais detalhes sobre como chegar até nós.</p>
+            <a href="https://maps.google.com" target="_blank" class="mt-4 bg-red-700 hover:bg-[#570000] text-white font-bold font-[Rubik] text-xl py-4 px-10 rounded-sm duration-100">
+                <i class="fa-solid fa-map-location-dot mr-3"></i>Ver no Google Maps
+            </a>
+        </div>
+        <div class="endereco-map-wrapper">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d467692.40053583815!2d-46.92562547359783!3d-23.681433219738427!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce448183a461d1%3A0x9ba94b08ff335bae!2sS%C3%A3o%20Paulo%2C%20State%20of%20S%C3%A3o%20Paulo!5e0!3m2!1sen!2sbr!4v1775927260949!5m2!1sen!2sbr"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="flex justify-between items-center min-h-80 bg-[#271F1F] px-35 py-8">
+        <a href="index.html">
+            <h1 class="text-white text-3xl font-serif tracking-[.25em]">HAKONE HOUSE</h1>
+        </a>
+        <div class="flex flex-col text-white w-70 gap-5">
+            <h2 class="font-bold text-2xl">Unidade Parque 10</h2>
+            <p>Av. Tancredo Neves, 282 - Parque 10 de Novembro, Manaus - AM, 69054-700</p>
+        </div>
+        <div class="flex flex-col text-white w-70 gap-5">
+            <a href="#" class="text-white text-xl underline hover:text-[#a09090] duration-100">
+                <i class="fa-brands fa-whatsapp text-white text-3xl mr-4"></i>(92) 12345-6789
+            </a>
+            <a href="#" class="text-white text-xl underline hover:text-[#a09090] duration-100">
+                <i class="fa-solid fa-envelope text-white text-2xl mr-4"></i><span class="__cf_email__" data-cfemail="c5a6aaabb1a4b1aaada4aeaaaba0adaab0b6a085a2a8a4aca9eba6aaa8">[email&#160;protected]</span>
+            </a>
+            <div class="flex gap-4 mt-2">
+                <a href="#" class="text-[#a09090] hover:text-white text-2xl duration-100"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="text-[#a09090] hover:text-white text-2xl duration-100"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="text-[#a09090] hover:text-white text-2xl duration-100"><i class="fa-brands fa-tiktok"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        /* ===== MENU HAMBÚRGUER ===== */
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav    = document.getElementById('mainNav');
+
+        menuToggle.addEventListener('click', () => {
+            mainNav.classList.toggle('open');
+            const icon = menuToggle.querySelector('i');
+            icon.className = mainNav.classList.contains('open')
+                ? 'fa-solid fa-xmark'
+                : 'fa-solid fa-bars';
+        });
+
+        /* Fechar menu ao clicar em link */
+        mainNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('open');
+                menuToggle.querySelector('i').className = 'fa-solid fa-bars';
+            });
+        });
+
+        /* ===== CARROSSEL ===== */
+        const slidesWrapper = document.getElementById('carrosselSlides');
+        const slides        = document.querySelectorAll('.slides');
+        const prevBtn       = document.getElementById('prev');
+        const nextBtn       = document.getElementById('next');
+        let currentIndex    = 0;
+
+        function getVisible() {
+            const w = window.innerWidth;
+            if (w <= 600)  return 1;
+            if (w <= 900)  return 2;
+            if (w <= 1200) return 3;
+            return 4;
+        }
+
+        function getSlideWidth() {
+            if (slides.length === 0) return 0;
+            return slides[0].offsetWidth + 20; /* largura + gap */
+        }
+
+        function updateCarrossel() {
+            const maxIndex = Math.max(0, slides.length - getVisible());
+            if (currentIndex > maxIndex) currentIndex = maxIndex;
+            slidesWrapper.style.transform = `translateX(-${currentIndex * getSlideWidth()}px)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const maxIndex = Math.max(0, slides.length - getVisible());
+            if (currentIndex < maxIndex) currentIndex++;
+            else currentIndex = 0;
+            updateCarrossel();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) currentIndex--;
+            else currentIndex = Math.max(0, slides.length - getVisible());
+            updateCarrossel();
+        });
+
+        window.addEventListener('resize', updateCarrossel);
+
+        /* ===== BARRAS DE SATISFAÇÃO (Intersection Observer) ===== */
+        const fills = document.querySelectorAll('.satisfaction-fill');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    fills.forEach(fill => {
+                        fill.style.width = fill.dataset.pct + '%';
+                    });
+                    observer.disconnect();
